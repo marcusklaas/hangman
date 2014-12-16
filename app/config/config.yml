@@ -1,6 +1,5 @@
 imports:
     - { resource: parameters.yml }
-    - { resource: security.yml }
     - { resource: services.yml }
 
 fos_rest:
@@ -23,10 +22,12 @@ fos_rest:
     exception:
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': 404
             'Marcusklaas\HangmanBundle\Service\GuessException': 400
-            'Marcusklaas\HangmanBundle\Service\WordLoader\WordLoaderException': 500
+            'Marcusklaas\HangmanBundle\Service\WordLoader\WordLoaderException': 400
         messages:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Symfony\Component\HttpKernel\Exception\NotFoundHttpException': true
             'Marcusklaas\HangmanBundle\Service\GuessException': true
             'Marcusklaas\HangmanBundle\Service\WordLoader\WordLoaderException': true
 
