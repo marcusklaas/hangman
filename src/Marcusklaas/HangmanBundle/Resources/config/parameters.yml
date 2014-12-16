@@ -1,0 +1,3 @@
+parameters:
+  hangman.maximum_tries: %maximum_tries%
+  hangman.word_file_path: %word_file_path%

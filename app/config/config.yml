@@ -1,0 +1,66 @@
+imports:
+    - { resource: parameters.yml }
+    - { resource: security.yml }
+    - { resource: services.yml }
+
+fos_rest:
+    routing_loader:
+        default_format: json
+        include_format: true
+    param_fetcher_listener: force
+    body_listener: true
+    allowed_methods_listener: true
+    view:
+        view_response_listener: 'force'
+        formats:
+            json: true
+            xml: true
+    format_listener:
+        rules:
+            - { path: '^/games', priorities: ['json'], fallback_format: json, prefer_extension: true }
+            # Add xml to the priorities list to produce xml when the client accepts xml but not json.
+            # Since most browser do not include json in their accept header, we won't do this by default.
+    exception:
+        enabled: true
+        codes:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
+            'Marcusklaas\HangmanBundle\Service\GuessException': 400
+            'Marcusklaas\HangmanBundle\Service\WordLoader\WordLoaderException': 500
+        messages:
+            'Symfony\Component\Routing\Exception\ResourceNotFoundException': true
+            'Marcusklaas\HangmanBundle\Service\GuessException': true
+            'Marcusklaas\HangmanBundle\Service\WordLoader\WordLoaderException': true
+
+framework:
+    secret:          "%secret%"
+    router:
+        resource: "%kernel.root_dir%/config/routing.yml"
+        strict_requirements: ~
+    form:            ~
+    csrf_protection: ~
+    validation:      { enable_annotations: true }
+    templating:
+        engines: ['php']
+    default_locale:  "%locale%"
+    trusted_hosts:   ~
+    trusted_proxies: ~
+    session:
+        handler_id:  ~
+    fragments:       ~
+    http_method_override: true
+
+# Doctrine Configuration
+doctrine:
+    dbal:
+        driver:   "%database_driver%"
+        host:     "%database_host%"
+        port:     "%database_port%"
+        dbname:   "%database_name%"
+        user:     "%database_user%"
+        password: "%database_password%"
+        path:     "%database_path%"
+        charset:  UTF8
+
+    orm:
+        auto_generate_proxy_classes: "%kernel.debug%"
+        auto_mapping: true

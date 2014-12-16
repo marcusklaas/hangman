@@ -1,0 +1,28 @@
+services:
+  hangman.game_manager:
+    class: Marcusklaas\HangmanBundle\Service\GameManager
+    arguments:
+      - @doctrine.orm.default_entity_manager
+      - @hangman.word_loader.file
+
+  hangman.game_state_factory:
+    class: Marcusklaas\HangmanBundle\Service\GameStateFactory
+    arguments:
+      - %hangman.maximum_tries%
+
+  hangman.guess_handler:
+    class: Marcusklaas\HangmanBundle\Service\GuessHandler
+    arguments:
+      - @doctrine.orm.default_entity_manager
+      - @hangman.game_state_factory
+
+  hangman.word_loader.file:
+    class: Marcusklaas\HangmanBundle\Service\WordLoader\FileWordLoader
+    arguments:
+      - %hangman.word_file_path%
+
+  hangman.repository.game:
+    class: Marcusklaas\HangmanBundle\Repository\GameRepository
+    factory: ["@doctrine.orm.default_entity_manager", getRepository]
+    arguments:
+      - Marcusklaas\HangmanBundle\Entity\Game

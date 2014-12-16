@@ -1,0 +1,20 @@
+hangman.index:
+    path:     /
+    defaults: { _controller: MarcusklaasHangmanBundle:Hangman:index }
+    methods:  [GET]
+
+hangman.new_game:
+    path:     /
+    defaults: { _controller: MarcusklaasHangmanBundle:Hangman:newGame }
+    #methods:  [POST]
+    # this route isn't picked up when we specify a method for some reason.. bug?
+
+hangman.guess:
+    path:     /{game}
+    defaults: { _controller: MarcusklaasHangmanBundle:Hangman:guess }
+    methods:  [POST]
+
+hangman.details:
+    path:     /{game}
+    defaults: { _controller: MarcusklaasHangmanBundle:Hangman:details }
+    methods:  [GET]
