@@ -21,7 +21,6 @@ fos_rest:
             # Add xml to the priorities list to produce xml when the client accepts xml but not json.
             # Since most browser do not include json in their accept header, we won't do this by default.
     exception:
-        enabled: true
         codes:
             'Symfony\Component\Routing\Exception\ResourceNotFoundException': 404
             'Marcusklaas\HangmanBundle\Service\GuessException': 400
